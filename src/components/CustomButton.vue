@@ -1,18 +1,12 @@
 <template>
-  <button :type="type">
+  <button>
     <slot />
   </button>
 </template>
 
 <script>
 export default {
-  name: 'CustomButton',
-  props: {
-    type: {
-      type: String,
-      default: 'button'
-    }
-  }
+  name: 'CustomButton'
 }
 </script>
 

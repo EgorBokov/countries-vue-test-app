@@ -7,19 +7,15 @@ export default {
     region: String,
     subRegion: String,
     capital: String,
+    flag: String,
     topLevelDomain: Array,
     currencies: Array,
     languages: Array,
     borders: Array,
   },
   methods: {
-    routerPush(name) {
-      this.$router. (`/country/${name}`);
-    }
-  },
-  data() {
-    return {
-      neighbors: [],
+    routerPush(item) {
+      this.$router.push(item);
     }
   }
 }
@@ -27,7 +23,7 @@ export default {
 
 <template>
   <section class="wrapper">
-    <img class="image" src="" alt="">
+    <img class="image" :src="flag" alt="">
     <div>
       <h1 class="title"></h1>
       <div class="list">
@@ -68,7 +64,7 @@ export default {
           There is no border countries!
         </span>
         <div v-else class="border-info__wrapper">
-          <span class="border-info__wrapper-element" v-for="item in neighbors" :key="item" @click="routerPush(item)">
+          <span class="border-info__wrapper-element" v-for="item in borders" :key="item" @click="routerPush(item)">
             {{ item }}
           </span>
         </div>
@@ -99,6 +95,7 @@ export default {
 }
 
 .image {
+  max-width: 560px;
   display: block;
   width: 100%;
   height: 100%;

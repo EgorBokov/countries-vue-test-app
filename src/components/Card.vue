@@ -13,14 +13,14 @@ export default {
     name: {
       type: String,
       required: true
-    }
+    },
   }
 }
 </script>
 
 <template>
   <div class="card">
-    <img class="card__image" />
+    <img class="card__image" :src="img" :alt="name" />
     <div class="card__info">
       <h3 class="card__title"></h3>
       <ul class="card__list-info">
@@ -34,6 +34,8 @@ export default {
 </template>
 
 <style scoped lang="scss">
+@import '@assets/variables.scss';
+
 .card {
   border-radius: 5px;
   background-color: $color-pale-white;
