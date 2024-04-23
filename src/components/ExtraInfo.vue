@@ -2,8 +2,9 @@
 export default {
   name: 'ExtraInfo',
   props: {
+    name: String,
     nativeName: String,
-    population: String,
+    population: [String, Number],
     region: String,
     subRegion: String,
     capital: String,
@@ -12,11 +13,6 @@ export default {
     currencies: Array,
     languages: Array,
     borders: Array,
-  },
-  methods: {
-    routerPush(item) {
-      this.$router.push(item);
-    }
   }
 }
 </script>
@@ -25,7 +21,7 @@ export default {
   <section class="wrapper">
     <img class="image" :src="flag" alt="">
     <div>
-      <h1 class="title"></h1>
+      <h1 class="title">{{ name }}</h1>
       <div class="list">
         <ul class="list__wrapper">
           <li class="list__wrapper-item">
@@ -60,11 +56,11 @@ export default {
 
       <div class="border-info">
         <b>Border Countries</b>
-        <span v-if="!borders.length">
+        <span v-if="!borders?.length">
           There is no border countries!
         </span>
         <div v-else class="border-info__wrapper">
-          <span class="border-info__wrapper-element" v-for="item in borders" :key="item" @click="routerPush(item)">
+          <span class="border-info__wrapper-element" v-for="item in borders" :key="item">
             {{ item }}
           </span>
         </div>
@@ -103,8 +99,9 @@ export default {
 }
 
 .title {
-  margin: 0;
-  font-weight: $font-normal;
+  margin: 0 0 23px 0;
+  font-size: 32px;
+  font-weight: $font-bold;
 }
 
 .list {
@@ -124,9 +121,6 @@ export default {
 
     &-item {
       line-height: 1.8;
-      & > b {
-        font-weight: var(--fw-bold);
-      }
     }
   }
 }
@@ -157,7 +151,6 @@ export default {
       background-color: $color-pale-white;
       box-shadow: $deep-shadow;
       line-height: 1.5;
-      cursor: pointer;
     }
   }
 }

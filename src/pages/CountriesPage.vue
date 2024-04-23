@@ -1,10 +1,10 @@
 <script>
-import { reactive, onMounted, watch, inject, computed } from 'vue';
+import { reactive, onMounted, watch, inject, computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import axios from 'axios';
 import Search from '@components/Search.vue';
 import List from '@components/List.vue';
 import Card from '@components/Card.vue';
+import { encodeNameForHref } from "@/utils/customHrefEncoder.js";
 
 export default {
   name: 'CountriesPage',
@@ -16,6 +16,8 @@ export default {
   },
   setup() {
     const router = useRouter();
+
+    const searchValue = ref('');
 
     const injectedCountries = inject('countries');
     const getCountries = inject('getCountries');
@@ -36,8 +38,10 @@ export default {
     });
 
     const handleRouteChange = (countryName) => {
+      const encodedName = encodeNameForHref(countryName);
+
       router.push({
-        path: `/${countryName}`,
+        path: `/${encodedName}`,
       });
     };
 
@@ -45,7 +49,7 @@ export default {
       let data = [...injectedCountries.value];
 
       if (countryTitle) {
-        data = data.filter((elem) => elem.value.name.toLowerCase().includes(countryTitle.toLowerCase()))
+        data = data.filter((elem) => elem.name.toLowerCase().includes(countryTitle.toLowerCase()));
       }
 
       filteredCountries.countries = [...data];
@@ -53,6 +57,10 @@ export default {
 
     watch(injectedCountries, () => {
       handleSearch();
+    });
+
+    watch(searchValue, () => {
+      handleSearch(searchValue.value);
     });
 
     onMounted(async () => {
@@ -63,12 +71,14 @@ export default {
       filteredCountries,
       formattedCountriesList,
       handleRouteChange,
+      searchValue,
     }
   }
 }
 </script>
 
 <template>
+  <Search v-model="searchValue" />
   <List>
     <Card
         v-for="item in formattedCountriesList"

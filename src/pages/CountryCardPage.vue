@@ -4,6 +4,7 @@ import { inject, onMounted, ref } from 'vue';
 import CustomButton from '@components/CustomButton.vue';
 import ExtraInfo from '@components/ExtraInfo.vue';
 import ArrowLeft from '@icons/ArrowLeft.vue';
+import {decodeNameForHref} from "@/utils/customHrefEncoder.js";
 
 export default {
   name: 'CountryCardPage',
@@ -30,9 +31,10 @@ export default {
     });
 
     const handleGetExactCountry = () => {
-      country.value = Array.from(countries.value).find(({ name }) => name === params.name);
-      console.log({ country: country.value })
-    }
+      const decodedNameFromHref = decodeNameForHref(params.name);
+
+      country.value = Array.from(countries.value).find(({ name }) => name === decodedNameFromHref);
+    };
 
     const handleRouterMoveBack = () => {
       router.go(-1);
@@ -55,6 +57,9 @@ export default {
       </CustomButton>
     </div>
     <ExtraInfo v-if="country && !isLoading" v-bind="country" />
+    <div v-else-if="isLoading">
+      Loading...
+    </div>
     <div v-else>
       No data found about this country.
     </div>
