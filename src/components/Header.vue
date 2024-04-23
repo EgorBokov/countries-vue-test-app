@@ -21,16 +21,19 @@ export default {
 
 <style lang="scss" scoped>
 @import '@assets/variables.scss';
+
 .header {
   box-shadow: $deep-shadow;
   background-color: $color-pale-white;
 }
 
 .title {
-  color: $color-black;
-  font-size: $small;
-  text-decoration: none;
-  font-weight: $font-bold;
+  a { 
+    text-decoration: none;
+    font-size: $small; 
+    font-weight: $font-bold;
+    color: $color-black;
+  }
 }
 
 .wrapper {

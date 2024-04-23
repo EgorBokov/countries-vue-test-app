@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { computed, reactive, provide } from 'vue';
+import { reactive, provide } from 'vue';
 import Header from '@components/Header.vue';
 import Main from '@components/Main.vue';
 import axios from 'axios';
